@@ -6,7 +6,7 @@ Firstly I wanted to use React for this project, but there are two main reasons I
 The second one is that this app is, in my opinion, too simple to create it in React and all related technologies (like Webpack) - the app would have the only one component (the map).
 
 ## About the app itself
-I'm writing this note because the app might look quite big for such simple functionality (three API fetches for example). The main reason for this is the date that it must to deal with. Because of big differences in timezones (North America's West Coast or Australia), the current date is sometimes in the scope of yesterday's or tomorrow's sunrise/sunset cycles. To be as accurate as it's possible the app needs to check if the current time is not placed between yesterday's or tomorrow's cycle, otherwise it could display totally wrong value.
+I'm writing this note because the app might look quite big for such simple functionality (three API fetches for example). The main reason for this is the date it must to deal with. Because of big differences in timezones (North America's West Coast or Australia), the current date is sometimes in the scope of yesterday's or tomorrow's sunrise/sunset cycles. To be as accurate as it's possible the app needs to check if the current time is not placed between yesterday's or tomorrow's cycle, otherwise it could display totally wrong value.
 
 Keeping that in mind I tried to build the code in the most encapsulated and readable way I could.
 
