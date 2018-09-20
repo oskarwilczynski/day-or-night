@@ -5,55 +5,78 @@ function initMap() {
     });
 
     map.addListener('click', function(event) {
+        // Displaying loading state
+        document.querySelector("#text-header").textContent = "Loading...";
+        document.querySelector("#text-header").style.textDecoration="none";
+        
         const latLng = event.latLng;
 
         map.setZoom(9);
         map.setCenter(latLng);
 
-        fetchSunriseSunset(latLng.lat(), latLng.lng());
+        fetchAllData(latLng.lat(), latLng.lng());
     });
 }
 
-function fetchSunriseSunset(lat, lng) {
-    fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`)
-    .then(res => {
-        if (res.ok) {
-        return res.json();
-        } else {
-        throw Error(`Request rejected with status ${res.status}`);
-        }
-    })
-    .then(data => calcDaytime(data.results))
-    .catch(err => console.error(err));
-}
+function fetchAllData(lat, lng) {
+    let yesterdayData, currentData, tomorrowData;
 
-function calcDaytime(data) {
-    const sunsetTime = data.sunset;
-    const sunriseTime = data.sunrise;
-    let currentTime = new Date().toISOString().substr(0,19) + "+00:00";
-
-    // PREVENTING NOT UPDATED SUNRISE/SUNSET BUG FOR WEST
-    if (sunsetTime.substr(0, 10) > currentTime.substr(0, 10)) {
-        console.log("Test")
-        currentTime = new Date();
-
-        currentTime.setDate(currentTime.getDate() + 1);
-        currentTime = currentTime.toISOString().substr(0,19) + "+00:00";
+    function fetchTemplate(variable, date) {
+        return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${date}&formatted=0`)
+        .then(res => {
+            if (res.ok) {
+            return res.json();
+            } else {
+            throw Error(`Request rejected with status ${res.status}`);
+            }
+        })
+        .then(data => variable = data.results)
+        .catch(err => console.error(err));
     }
 
-    // PREVENTING NOT UPDATED SUNRISE/SUNSET BUG FOR EAST
-    // if (sunriseTime.substr(0, 10) <= currentTime.substr(0, 10)) {
-    //     console.log("Test2")
-    //     currentTime = new Date();
+    function getYesterdayData() {
+        yesterday = new Date();
 
-    //     currentTime.setDate(currentTime.getDate() - 1);
-    //     currentTime = currentTime.toISOString().substr(0,19) + "+00:00";;
-    // }
+        yesterday.setDate(yesterday.getDate() - 1);
+        yesterday = yesterday.toISOString().substr(0,10);
+
+        return fetchTemplate(yesterdayData, yesterday);
+    }
+
+    function getCurrentData() {
+        return fetchTemplate(currentData, "today");
+    }
+
+    function getTomorrowData() {
+        tomorrow = new Date();
+
+        tomorrow.setDate(tomorrow.getDate() - 1);
+        tomorrow = tomorrow.toISOString().substr(0,10);
+
+        return fetchTemplate(tomorrowData, tomorrow);
+    }
+
+    function getAllData(){
+        return Promise.all([getYesterdayData(), getCurrentData(), getTomorrowData()])
+    }
+
+    getAllData()
+    .then(([yesterdayFetch, currentFetch, tomorrowFetch]) => {
+        calcDaytime(yesterdayFetch, currentFetch, tomorrowFetch)
+    })
+}
+
+function calcDaytime(yesterdayData, currentData, tomorrowData) {
+    let currentTime = new Date().toISOString().substr(0,19) + "+00:00";
 
     function decideDaytime() {
-        if (currentTime >= sunriseTime && currentTime < sunsetTime) {
+        if (
+            (currentTime >= currentData.sunrise && currentTime < currentData.sunset) ||
+            (currentTime >= yesterdayData.sunrise && currentTime < yesterdayData.sunset) ||
+            (currentTime >= tomorrowData.sunrise && currentTime < tomorrowData.sunset)
+        ) {
             return true;
-        } else if (currentTime === sunsetTime) {
+        } else if (currentTime === currentData.sunset) {
             return false;
         } else {
             return false;
