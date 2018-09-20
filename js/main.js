@@ -32,23 +32,30 @@ function calcDaytime(data) {
     const sunriseTime = data.sunrise;
     let currentTime = new Date().toISOString().substr(0,19) + "+00:00";
 
-    if (sunriseTime.substr(0, 10) < currentTime.substr(0, 10)) {
+    // PREVENTING NOT UPDATED SUNRISE/SUNSET BUG FOR WEST
+    if (sunsetTime.substr(0, 10) > currentTime.substr(0, 10)) {
+        console.log("Test")
         currentTime = new Date();
 
-        currentTime.setDate(currentTime.getDate() - 1);
-        currentTime = currentTime.toISOString();
+        currentTime.setDate(currentTime.getDate() + 1);
+        currentTime = currentTime.toISOString().substr(0,19) + "+00:00";
     }
 
-    
+    // PREVENTING NOT UPDATED SUNRISE/SUNSET BUG FOR EAST
+    // if (sunriseTime.substr(0, 10) <= currentTime.substr(0, 10)) {
+    //     console.log("Test2")
+    //     currentTime = new Date();
+
+    //     currentTime.setDate(currentTime.getDate() - 1);
+    //     currentTime = currentTime.toISOString().substr(0,19) + "+00:00";;
+    // }
+
     function decideDaytime() {
         if (currentTime >= sunriseTime && currentTime < sunsetTime) {
-            console.log("It's day!");
             return true;
         } else if (currentTime === sunsetTime) {
-            console.log("It's night!");
             return false;
         } else {
-            console.log("It's night!");
             return false;
         }
     }
