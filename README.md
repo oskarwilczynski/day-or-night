@@ -5,18 +5,18 @@ Firstly I wanted to use React for this project, but there are two main reasons I
 
 The second one is that this app is, in my opinion, too simple to create it in React and all related technologies (like Webpack) - the app would have the only one component (the map).
 
-## Important information about the problem I found in API
-The problem with API is that it hard to check if it's night or day around later hours (around midnight for example) - because then the API gets an update with the new dates and sometimes user's current date is totally out of scope, because the sunrise/sunset dates are already for the next day. On the other side, in east regions dates are not up to date and current date is like one day further than sunrise. I would imagine it updates sunrise/sunsate date when the current date has passed one or another, but unfortunately it's not this way. In ideal world API would have yet another two fields - "Previous Sunset" and "Previous Sunrise".
+## About the app itself
+I'm writing this note because the app might look quite big for such simple functionality (three API fetches for example). The main reason for this is the date that it must to deal with. Because of big differences in timezones (North America's West Coast or Australia), the current date is sometimes in the scope of yesterday's or tomorrow's sunrise/sunset cycles. To be as accurate as it's possible the app needs to check if the current time is not placed between yesterday's or tomorrow's cycle, otherwise it could display totally wrong value.
 
-If I would have more time with the app, I could observe when exactly it happens and somehow try to adapt the app for it.
-
-I've put a code that prevents one of the bugs, but because we've got minus hours on the west and plus hours on the east it's not possible to do it in one function.
+Keeping that in mind I tried to build the code in the most encapsulated and readable way I could.
 
 ### Tech Stack
 
   - HTML
   - CSS
-  - JavaScript
+  - JavaScript (ES6)
+  - Google Maps API
+  - Sunrise/Sunset API (https://sunrise-sunset.org/api)
   - Fetch API
 
 ### Usage
