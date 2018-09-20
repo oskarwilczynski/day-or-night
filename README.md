@@ -6,7 +6,7 @@ Firstly I wanted to use React for this project, but there are two main reasons I
 The second one is that this app is, in my opinion, too simple to create it in React and all related technologies (like Webpack) - the app would have the only one component (the map).
 
 ## Important information about the problem I found in API
-The problem with API is that it hard to check if it's night or day around later hours (around midnight for example) - because then the API gets an update with the new dates and sometimes user's current date is totally out of scope, because the sunrise/sunset dates are already for the next day - I would imagine it updates sunrise/sunsate date when the current date has passed one or another, but unfortunately it's not this way.
+The problem with API is that it hard to check if it's night or day around later hours (around midnight for example) - because then the API gets an update with the new dates and sometimes user's current date is totally out of scope, because the sunrise/sunset dates are already for the next day. On the other side, in east regions dates are not up to date and current date is like one day further than sunrise. I would imagine it updates sunrise/sunsate date when the current date has passed one or another, but unfortunately it's not this way. In ideal world API would have yet another two fields - "Previous Sunset" and "Previous Sunrise".
 
 If I would have more time with the app, I could observe when exactly it happens and somehow try to adapt the app for it.
 
