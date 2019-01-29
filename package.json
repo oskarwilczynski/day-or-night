@@ -1,0 +1,31 @@
+{
+  "name": "day-or-night",
+  "version": "1.0.0",
+  "description": "Firstly I wanted to use React for this project, but there are two main reasons I have not. First, Google Maps API has no official support for React, all the implementations are done by community, which are not updated regularly and lacks some of the basic functionalities - even getting coordinates on click seemed to be a problem.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oskarwilczynski/day-or-night.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oskarwilczynski/day-or-night/issues"
+  },
+  "homepage": "https://github.com/oskarwilczynski/day-or-night#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-header": "^2.0.7",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-uglify": "^3.0.1",
+    "pump": "^3.0.0"
+  }
+}

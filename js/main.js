@@ -35,7 +35,7 @@ function fetchAllData(lat, lng) {
     }
 
     function getYesterdayData() {
-        yesterday = new Date();
+        let yesterday = new Date();
 
         yesterday.setDate(yesterday.getDate() - 1);
         yesterday = yesterday.toISOString().substr(0,10);
@@ -48,7 +48,7 @@ function fetchAllData(lat, lng) {
     }
 
     function getTomorrowData() {
-        tomorrow = new Date();
+        let tomorrow = new Date();
 
         tomorrow.setDate(tomorrow.getDate() - 1);
         tomorrow = tomorrow.toISOString().substr(0,10);
